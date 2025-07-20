@@ -1,26 +1,18 @@
-# Step 1: Build client (React/Vite)
+# Step 1: Build client
 FROM node:18 AS client-build
 WORKDIR /app/client
-COPY client/ ./           # Salin isi folder client
+COPY P-Ingfo/client/ ./        
 RUN npm install
-RUN npm run build         # Hasil build akan ada di /app/client/dist
+RUN npm run build
 
-# Step 2: Setup server
+# Step 2: Build server
 FROM node:18 AS server
 WORKDIR /app
-
-# Salin server source code
-COPY server/ ./server
-
-# Salin hasil build client ke dalam folder server (misalnya ./server/client-dist)
+COPY P-Ingfo/server/ ./server
 COPY --from=client-build /app/client/dist ./server/client-dist
 
-# Install dependencies server
 WORKDIR /app/server
 RUN npm install
 
-# Expose port backend (Express server)
-EXPOSE 3333
-
-# Jalankan server
+EXPOSE 5000
 CMD ["node", "src/index.js"]
