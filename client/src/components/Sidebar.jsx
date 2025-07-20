@@ -33,7 +33,7 @@ const Sidebar = () => {
           {menuItems.map((item) => {
             const isActive = location.pathname === item.url;
             return (
-              <li key={item.name}>
+              <li key={item.name} className={`w-full ${!isExpanded ? "tooltip tooltip-bottom" : ""}`} data-tip={item.name}>
                 <Link
                   to={item.url}
                   className={`flex items-center gap-3 px-4 py-2 rounded-2xl transition-colors
