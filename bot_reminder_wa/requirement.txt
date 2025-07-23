@@ -2,3 +2,4 @@ node-cron
 @whiskeysockets/baileys
 qrcode-terminal
 mysql2
+axios
