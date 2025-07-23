@@ -13,6 +13,7 @@ import {
     getDueTasks,
 } from "./db.js";
 
+import {Ai4Chat} from "./scrape/Ai4Chat.js";
 import qrcode from "qrcode-terminal";
 
 const RETRY_LIMIT = 5;
@@ -59,7 +60,7 @@ async function startBot() {
             const senderJid = msg.key.remoteJid;
             
             if (senderJid.endsWith("@g.us")){
-                console.log(`Message from group: ${senderJid}\nMessage from: ${msg.key.participant}\n`);
+                console.log(`Message from group: ${senderJid}\nMessage from: ${msg.key.participant || 'Bot'}\n`);
             }
             else{
                 console.log(`Message from: ${senderJid}\n`);
@@ -125,6 +126,28 @@ async function startBot() {
                 await sock.sendMessage(senderJid, {
                     text: `✅ Tugas ID ${id} ditandai selesai.`,
                 });
+            }
+
+            if (command.startsWith("!ask")){
+                const prompt= message.slice(5);
+                if (!prompt){
+                    return sock.sendMessage(senderJid, {
+                        text: '☘️*Contoh:* !ask apa itu python?',
+                    });
+                }
+                try {
+                    const answer = await Ai4Chat(prompt);
+                    await sock.sendMessage(senderJid, {
+                        text: answer,
+                        quoted: msg,
+                    })
+                } catch (error) {
+                    console.error("Error:", error);
+                    sock.sendMessage(senderJid, {
+                        text: '❌Gagal saat melakukan proses',
+                    })
+                }
+
             }
         }
     });
