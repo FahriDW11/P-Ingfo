@@ -2,14 +2,8 @@ import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
   {
-    username: {
-      type: String,
-      required: true,
-      unique: true,
-      trim: true,
-    },
     password: {
-      type: String,
+      type: String, // bcryptjs menghasilkan hash sebagai string
       required: true,
     },
     role: {
@@ -41,6 +35,12 @@ const userSchema = new mongoose.Schema(
       required: true,
       trim: true,
       match: [/^\d{10,15}$/, "Invalid phone number"],
+    },
+    status: {
+      type: String,
+      required: true,
+      enum: ["pending", "active", "non-active"],
+      default: "pending",
     },
   },
   { timestamps: true }
