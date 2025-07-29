@@ -18,5 +18,5 @@ COPY --from=client-build /app/client/dist ./client/dist
 WORKDIR /app/server
 RUN npm install
 
-EXPOSE 3333
+EXPOSE 3000
 CMD ["node", "src/server.js"]
