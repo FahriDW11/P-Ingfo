@@ -1,32 +1,28 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import toast from "react-hot-toast";
-import { Plus, UserMinus2 } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 
 import PrivateRoute from "../components/PrivateRoute.jsx";
 import api from "../lib/axios.js";
-import { getUserRole } from "../lib/auth.js";
-import UserTable from "../components/UserTable.jsx";
+import UserPendingList from "../components/UserPendingList.jsx";
 
-const UsersPage = () => {
+const PendingUsersPage = () => {
   const token = localStorage.getItem("token");
-  const userRole = getUserRole();
   const [isRateLimited, setIsRateLimited] = useState(false);
   const [users, setUsers] = useState([]);
-  const [pendingUsersLength, setPendingUsersLength] = useState(0);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchUsers = async () => {
       setLoading(true);
       try {
-        const response = await api.get("/users", {
+        const response = await api.get("/users/pending", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-        setUsers(response.data.users);
-        setPendingUsersLength(response.data.pending);
+        setUsers(response.data);
         console.log("Users fetched successfully:", response.data);
       } catch (error) {
         if (error.response && error.response.status === 429) {
@@ -43,24 +39,12 @@ const UsersPage = () => {
   }, []);
 
   return (
-    <PrivateRoute allowedRoles={["superadmin", "admin", "user"]}>
+    <PrivateRoute allowedRoles={["superadmin", "admin"]}>
       <div className="flex justify-between mb-4">
-        <h1 className="text-3xl font-bold mb-4">Daftar User</h1>
-        <div>
-          {userRole === "user" && (
-            <Link to="/add-user" className="btn btn-primary mb-4">
-              <Plus />
-            </Link>
-          )}
-          {(userRole === "user" || userRole === "superadmin") && (
-            <div className="indicator">
-              {pendingUsersLength > 0 && <span className="indicator-item badge badge-error">{pendingUsersLength}</span>}
-              <Link to="/users/pending" className="btn btn-secondary mb-4">
-                <UserMinus2 />
-              </Link>
-            </div>
-          )}
-        </div>
+        <Link to={"/users"}>
+          <ArrowLeft />
+        </Link>
+        <h1 className="text-3xl font-bold mb-4">Daftar User Pending</h1>
       </div>
       {isRateLimited && toast.error("You have exceeded the rate limit. Please try again later.")}
       {loading && (
@@ -72,7 +56,7 @@ const UsersPage = () => {
       {users.length > 0 && !isRateLimited && (
         <ul>
           {users.map((user) => (
-            <UserTable key={user._id} user={user} />
+            <UserPendingList key={user._id} user={user} />
           ))}
         </ul>
       )}
@@ -80,4 +64,4 @@ const UsersPage = () => {
   );
 };
 
-export default UsersPage;
+export default PendingUsersPage;

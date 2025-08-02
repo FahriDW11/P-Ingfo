@@ -1,6 +1,7 @@
 import React from "react";
 import toast from "react-hot-toast";
 import PrivateRoute from "../components/PrivateRoute";
+import { getUserData } from "../lib/auth";
 
 const HomePage = () => {
   return (
@@ -36,6 +37,14 @@ const HomePage = () => {
           }}
         >
           switch to Valentine
+        </button>
+        <button
+          onClick={() => {
+            let userData = getUserData();
+            console.log("User Data:", userData);
+          }}
+        >
+          userdata
         </button>
       </div>
     </PrivateRoute>

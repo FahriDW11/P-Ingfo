@@ -9,6 +9,18 @@ export async function getAllTasks(_, res) {
   }
 }
 
+export async function getTaskFromId(req, res) {
+  try {
+    const task = await Task.findById(req.params.id);
+    if (!task) {
+      return res.status(404).json({ message: "Task not found" });
+    }
+    res.status(200).json(task);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching task", error });
+  }
+}
+
 export async function addTask(req, res) {
   try {
     const newTask = new Task(req.body);

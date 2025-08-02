@@ -7,8 +7,8 @@ export async function getUserToken(req, res) {
   if (!user || !bcrypt.compareSync(req.body.password, user.password)) {
     return res.status(401).json({ message: "Invalid credentials" });
   }
-  const token = jwt.sign({ id: user._id, role: user.role, status: user.status }, "SECRET_KEY", { expiresIn: "2h" });
-  res.json({ token });
+  const token = jwt.sign({ id: user._id, role: user.role }, "SECRET_KEY");
+  res.json({ token, userStatus: user.status });
 }
 
 export async function addUser(req, res) {
@@ -26,14 +26,5 @@ export async function addUser(req, res) {
     res.status(201).json({ message: "User registered successfully" });
   } catch (error) {
     res.status(400).json({ message: "Error registering user", error });
-  }
-}
-
-export async function getAllUsers(req, res) {
-  try {
-    const users = await User.find().select("-password");
-    res.json(users);
-  } catch (error) {
-    res.status(500).json({ message: "Error fetching users", error });
   }
 }

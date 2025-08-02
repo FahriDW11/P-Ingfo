@@ -1,9 +1,10 @@
+import React from "react";
+
 import { Link, useLocation } from "react-router";
 import { House, BookOpenCheck, Settings, Menu, X } from "lucide-react";
 
-const Sidebar = () => {
+const Drawer = () => {
   const location = useLocation();
-
   const menuItems = [
     { name: "Home", icon: <House size={24} />, url: "/" },
     { name: "Tugas", icon: <BookOpenCheck size={24} />, url: "/tasks" },
@@ -11,11 +12,12 @@ const Sidebar = () => {
   ];
 
   return (
-    <div className={`bg-base-100 text-base-content rounded-xl h-screen transition-all duration-300 w-20 flex-col md:flex hidden`}>
+    <div className={`bg-base-100 text-base-content rounded-xl h-screen transition-all duration-300 w-64 flex-col flex fixed`}>
       {/* Top Section */}
-      <div className={`flex items-center p-4 justify-center`}>
-        <label htmlFor="my-drawer" aria-label="open sidebar" className="btn btn-square btn-ghost">
-          <Menu />
+      <div className={`flex items-center p-4 justify-between`}>
+        <h2 className="font-bold text-xl">P-Ingfo</h2>
+        <label htmlFor="my-drawer" aria-label="close sidebar" className="btn btn-square btn-ghost">
+          <X size={28} />
         </label>
       </div>
 
@@ -25,14 +27,14 @@ const Sidebar = () => {
           {menuItems.map((item) => {
             const isActive = location.pathname === item.url;
             return (
-              <li key={item.name} className={`w-full tooltip tooltip-bottom`} data-tip={item.name}>
+              <li key={item.name} className={`w-full`}>
                 <Link
                   to={item.url}
                   className={`flex items-center gap-3 px-4 py-2 rounded-2xl transition-colors
-                    ${isActive ? "bg-neutral text-neutral-content" : "hover:bg-neutral/15"}
-                    justify-center px-3`}
+                    ${isActive ? "bg-neutral text-neutral-content" : "hover:bg-neutral/15"}`}
                 >
                   <span className="block">{item.icon}</span>
+                  <span className="whitespace-nowrap">{item.name}</span>
                 </Link>
               </li>
             );
@@ -43,4 +45,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default Drawer;

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router";
 
-import { formatDate } from "../lib/utils.js";
+import { countdownToDate } from "../lib/utils.js";
 
 const TaskCard = ({ task }) => {
   return (
@@ -11,7 +11,7 @@ const TaskCard = ({ task }) => {
         <span className="badge badge-accent">{task.subject}</span>
         <p>{task.description}</p>
         <div className="card-actions justify-end">
-          <span className="badge badge-outline">{formatDate(task.deadline)}</span>
+          <span className="badge badge-outline">{countdownToDate(task.deadline)}</span>
         </div>
       </div>
     </Link>

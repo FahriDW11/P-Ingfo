@@ -3,6 +3,7 @@ import { Link } from "react-router";
 import toast from "react-hot-toast";
 import { Plus } from "lucide-react";
 
+import PrivateRoute from "../components/PrivateRoute.jsx";
 import api from "../lib/axios.js";
 import { getUserRole } from "../lib/auth.js";
 import TaskCard from "../components/TaskCard.jsx";
@@ -40,12 +41,12 @@ const TasksPage = () => {
   }, []);
 
   return (
-    <div>
+    <PrivateRoute allowedRoles={["superadmin", "admin", "user"]}>
       <div className="flex justify-between mb-4">
         <h1 className="text-3xl font-bold mb-4">Tugas</h1>
         {userRole !== "user" && (
           <Link to="/add-task" className="btn btn-primary mb-4">
-            <Plus />
+            <Plus /> Tambah
           </Link>
         )}
       </div>
@@ -59,7 +60,7 @@ const TasksPage = () => {
           ))}
         </div>
       )}
-    </div>
+    </PrivateRoute>
   );
 };
 

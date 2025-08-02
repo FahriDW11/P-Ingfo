@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Eye, EyeClosed } from "lucide-react";
-import { useNavigate } from "react-router";
+import { useNavigate, Link } from "react-router";
 import toast from "react-hot-toast";
 
 import api from "../lib/axios";
@@ -20,6 +20,10 @@ const LoginPage = () => {
         username,
         password,
       });
+      if (!!response.data.userStatus && response.data.userStatus !== "active") {
+        toast.error("Akun Anda belum aktif. Silakan hubungi atmin.");
+        return;
+      }
       if (!!response.data.token) {
         localStorage.setItem("token", response.data.token);
         toast.success("Login berhasil");
@@ -36,10 +40,10 @@ const LoginPage = () => {
   };
 
   return (
-    <div className={"flex items-center justify-center h-screen bg-base-200"}>
-      <div className="w-full max-w-md p-6 bg-base-100 rounded-lg shadow-md text-base-content">
+    <div className={"flex items-center justify-center min-h-screen bg-base-200"}>
+      <div className="w-full max-w-lg p-6 bg-base-100 rounded-lg shadow-md text-base-content">
         <h1 className="text-3xl font-bold mb-4 text-center">Login</h1>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4 mb-4">
           <div>
             <label className="block text-sm font-medium mb-1" htmlFor="username">
               Username
@@ -63,6 +67,12 @@ const LoginPage = () => {
             {loading ? "Tunggu..." : "Login"}
           </button>
         </form>
+        <p className="text-sm text-center mb-6">
+          Belum punya akun?{" "}
+          <Link to={"/register"} className={"btn-link"}>
+            Register
+          </Link>
+        </p>
       </div>
     </div>
   );

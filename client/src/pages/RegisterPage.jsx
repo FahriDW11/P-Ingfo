@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Eye, EyeClosed } from "lucide-react";
-import { useNavigate } from "react-router";
+import { useNavigate, Link } from "react-router";
 import api from "../lib/axios";
 import toast from "react-hot-toast";
 
@@ -18,6 +18,10 @@ const RegisterPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (password !== confirmPassword) {
+      toast.error("Bro password nya gk sama");
+      return;
+    }
     setLoading(true);
     try {
       await api.post("/auth/register", {
@@ -39,10 +43,10 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className={"flex items-center justify-center min-h-screen bg-base-200"}>
-      <div className="w-full max-w-md p-6 bg-base-100 rounded-lg shadow-md text-base-content">
-        <h1 className="text-3xl font-bold mb-4 text-center">Login</h1>
-        <form onSubmit={handleSubmit} className="space-y-4">
+    <div className={"flex items-center justify-center min-h-screen bg-base-200 p-2"}>
+      <div className="w-full max-w-lg p-6 bg-base-100 rounded-lg shadow-md text-base-content">
+        <h1 className="text-3xl font-bold mb-4 text-center">Register</h1>
+        <form onSubmit={handleSubmit} className="space-y-4 mb-4">
           {/* input untuk nama */}
           <div>
             <label className="block text-sm font-medium mb-1" htmlFor="name">
@@ -72,7 +76,7 @@ const RegisterPage = () => {
             <label className="block text-sm font-medium mb-1" htmlFor="phone">
               No. WA
             </label>
-            <input placeholder="23101140****" type="text" id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} className="input input-bordered w-full" required />
+            <input placeholder="081231231234" type="text" id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} className="input input-bordered w-full" required />
           </div>
 
           {/* input untuk password */}
@@ -95,19 +99,26 @@ const RegisterPage = () => {
               <span>Konfirmasi Password</span>
             </label>
             <label className="input input-bordered flex items-center gap-2">
-              <input placeholder="********" type={passwordVisible ? "text" : "password"} id="confirmPassword" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} className="grow" required />
-              <input id={"isVisible2"} value={confirmPasswordVisible} onChange={() => setConfirmPasswordVisible(!passwordVisible)} type="checkbox" className={"hidden peer"} />
+              <input placeholder="********" type={confirmPasswordVisible ? "text" : "password"} id="confirmPassword" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} className="grow" required />
+              <input id={"isVisible2"} value={confirmPasswordVisible} onChange={() => setConfirmPasswordVisible(!confirmPasswordVisible)} type="checkbox" className={"hidden peer"} />
               <label htmlFor="isVisible2" className="cursor-pointer">
-                {passwordVisible ? <Eye /> : <EyeClosed />}
+                {confirmPasswordVisible ? <Eye /> : <EyeClosed />}
               </label>
             </label>
           </div>
 
           {/* tombol submit */}
-          <button type="submit" className={`btn btn-primary w-full ${loading ? "loading" : ""}`}>
-            {loading ? "Membuat..." : "Login"}
+          <button type="submit" className={`btn btn-primary w-full`}>
+            <span className={`${loading ? "loading loading-spinner" : ""}`}></span>
+            {loading ? "Membuat..." : "Daftar"}
           </button>
         </form>
+        <p className="text-sm text-center mb-4">
+          Sudah punya akun?{" "}
+          <Link to={"/login"} className={"btn-link"}>
+            Login
+          </Link>
+        </p>
       </div>
     </div>
   );
