@@ -7,7 +7,7 @@ export async function getUserToken(req, res) {
   if (!user || !bcrypt.compareSync(req.body.password, user.password)) {
     return res.status(401).json({ message: "Invalid credentials" });
   }
-  const token = jwt.sign({ id: user._id, role: user.role }, "SECRET_KEY");
+  const token = jwt.sign({ id: user._id, name: user.name, role: user.role }, "SECRET_KEY");
   res.json({ token, userStatus: user.status });
 }
 

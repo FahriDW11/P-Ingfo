@@ -1,15 +1,50 @@
-import React from "react";
 import toast from "react-hot-toast";
-import PrivateRoute from "../components/PrivateRoute";
-import { getUserData } from "../lib/auth";
+import { SquareUser } from "lucide-react";
+
+import PrivateRoute from "../components/PrivateRoute.jsx";
+import { getUserData } from "../lib/auth.js";
 
 const HomePage = () => {
+  const userData = getUserData();
   return (
     <PrivateRoute allowedRoles={["admin", "user", "superadmin"]}>
       <div>
-        <h1 className="text-3xl font-bold mb-4">Home</h1>
-        <p>Selamat datang di halaman utama!</p>
-        <button
+        <h1 className="text-3xl font-bold mb-4">HI, {userData.name}</h1>
+        <div className="stats stats-vertical lg:stats-horizontal shadow-sm shadow-primary mx-auto">
+          <div className="stat">
+            <div className="stat-figure text-primary">
+              <SquareUser size={50} />
+            </div>
+            <div className="stat-title">Role</div>
+            <div className="stat-value text-primary">{userData.role.toUpperCase()}</div>
+            <div className="stat-desc">{userData.role === "user" ? "Bro jadi NPC" : "Salam Atmin"}</div>
+          </div>
+
+          <div className="stat">
+            <div className="stat-figure text-secondary">
+              <SquareUser size={50} />
+            </div>
+            <div className="stat-title">Tugas Deadline Minggu Ini</div>
+            <div className="stat-value text-secondary">{userData.role.toUpperCase()}</div>
+            <div className="stat-desc">{userData.role === "user" ? "Bro jadi NPC" : "Salam Atmin"}</div>
+          </div>
+
+          <div className="stat">
+            <div className="stat-figure text-info">
+              <SquareUser size={50} />
+            </div>
+            <div className="stat-title">Role</div>
+            <div className="stat-value text-info">{userData.role.toUpperCase()}</div>
+            <div className="stat-desc">{userData.role === "user" ? "Bro jadi NPC" : "Salam Atmin"}</div>
+          </div>
+        </div>
+
+        {/* untuk informasi */}
+        <div>
+          <h2 className="text-2xl font-semibold mt-6">Informasi</h2>
+          <p className="mt-2">Selamat datang di halaman utama! Di sini Anda dapat melihat informasi terkait tugas dan peran Anda. Pastikan untuk selalu memeriksa tugas yang harus diselesaikan.</p>
+        </div>
+        {/* <button
           onClick={() => {
             toast.success("Ini adalah notifikasi sukses!");
           }}
@@ -37,15 +72,7 @@ const HomePage = () => {
           }}
         >
           switch to Valentine
-        </button>
-        <button
-          onClick={() => {
-            let userData = getUserData();
-            console.log("User Data:", userData);
-          }}
-        >
-          userdata
-        </button>
+        </button> */}
       </div>
     </PrivateRoute>
   );
