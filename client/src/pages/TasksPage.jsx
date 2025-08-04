@@ -45,13 +45,18 @@ const TasksPage = () => {
       <div className="flex justify-between mb-4">
         <h1 className="text-3xl font-bold mb-4">Tugas</h1>
         {userRole !== "user" && (
-          <Link to="/add-task" className="btn btn-primary mb-4">
+          <Link to="/tambah-tugas" className="btn btn-primary mb-4">
             <Plus /> Tambah
           </Link>
         )}
       </div>
       {isRateLimited && toast.error("You have exceeded the rate limit. Please try again later.")}
-      {loading && <p>Loading tasks...</p>}
+      {loading && (
+        <div className="flex items-center justify-center">
+          <span className="loading loading-spinner loading-lg"></span>
+          <p>Memuat Tugas...</p>
+        </div>
+      )}
 
       {tasks.length > 0 && !isRateLimited && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">

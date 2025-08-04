@@ -58,7 +58,7 @@ export const AddTaskPage = () => {
       {isRateLimited && toast.error("Kebanyakan Request, Sabar ege...")}
       <div>
         <div className="flex gap-4 items-center mb-4">
-          <Link to="/tasks" className="btn btn-ghost">
+          <Link to="/tugas" className="btn btn-ghost">
             <ArrowLeft />
           </Link>
           <h1 className="text-3xl font-bold mb-4">Tambah Tugas</h1>

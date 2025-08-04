@@ -14,33 +14,12 @@ const taskSchema = new mongoose.Schema(
       default: "No description provided",
       minlength: 5,
     },
-    subject: {
-      type: String,
+    courseId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Course",
       required: true,
     },
     isGroup: {
-      type: Boolean,
-      default: false,
-    },
-    group: {
-      type: [
-        {
-          groupName: {
-            type: String,
-            trim: true,
-            default: "Default Group",
-          },
-          groupMembersId: [
-            {
-              type: mongoose.Schema.Types.ObjectId,
-              ref: "User",
-            },
-          ],
-        },
-      ],
-      default: [],
-    },
-    isCompleted: {
       type: Boolean,
       default: false,
     },

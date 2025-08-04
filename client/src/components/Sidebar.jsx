@@ -1,12 +1,13 @@
 import { Link, useLocation } from "react-router";
-import { House, BookOpenCheck, Settings, Menu, X } from "lucide-react";
+import { House, BookOpenCheck, Settings, Menu, ClipboardCheck } from "lucide-react";
 
 const Sidebar = () => {
   const location = useLocation();
 
   const menuItems = [
     { name: "Home", icon: <House size={24} />, url: "/" },
-    { name: "Tugas", icon: <BookOpenCheck size={24} />, url: "/tasks" },
+    { name: "Presensi", icon: <ClipboardCheck size={24} />, url: "/presensi" },
+    { name: "Tugas", icon: <BookOpenCheck size={24} />, url: "/tugas" },
     { name: "Settings", icon: <Settings size={24} />, url: "/settings" },
   ];
 

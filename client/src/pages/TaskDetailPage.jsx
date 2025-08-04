@@ -28,7 +28,7 @@ const TaskDetailPage = () => {
   return (
     <PrivateRoute allowedRoles={["superadmin", "admin", "user"]}>
       <div className="flex gap-4 items-center mb-4">
-        <Link to="/tasks" className="btn btn-ghost">
+        <Link to="/tugas" className="btn btn-ghost">
           <ArrowLeft />
         </Link>
         <h1 className="text-2xl font-bold">Detail Tugas</h1>

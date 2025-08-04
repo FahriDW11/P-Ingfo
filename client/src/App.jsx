@@ -6,6 +6,7 @@ import LoginPage from "./pages/LoginPage.jsx";
 import RegisterPage from "./pages/RegisterPage.jsx";
 import Unauthorized from "./components/Unauthorized.jsx";
 import HomePage from "./pages/HomePage.jsx";
+import AttendancePage from "./pages/AttendancePage.jsx";
 import TasksPage from "./pages/TasksPage.jsx";
 import AddTaskPage from "./pages/AddTaskPage.jsx";
 import TaskDetailPage from "./pages/TaskDetailPage.jsx";
@@ -27,9 +28,10 @@ const App = () => {
       <Route path="/unauthorized" element={<Unauthorized />} />
       <Route element={<MainComponent />}>
         <Route path="/" element={<HomePage />} />
-        <Route path="/tasks" element={<TasksPage />} />
-        <Route path="/add-task" element={<AddTaskPage />} />
-        <Route path="/task/:id" element={<TaskDetailPage />} />
+        <Route path="/presensi" element={<AttendancePage />} />
+        <Route path="/tugas" element={<TasksPage />} />
+        <Route path="/tambah-tugas" element={<AddTaskPage />} />
+        <Route path="/tugas/:id" element={<TaskDetailPage />} />
         <Route path="/users" element={<UsersPage />} />
         <Route path="/users/pending" element={<PendingUsersPage />} />
       </Route>
