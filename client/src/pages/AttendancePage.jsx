@@ -1,14 +1,28 @@
-import React from "react";
-import PrivateRoute from "../components/PrivateRoute";
+import { useState, useEffect } from "react";
 import { Link } from "react-router";
 import { Plus } from "lucide-react";
+
+import api from "../lib/axios.js";
+import PrivateRoute from "../components/PrivateRoute";
 import { getUserRole } from "../lib/auth.js";
-import { useState, useEffect } from "react";
 
 const AttendancePage = () => {
   const userRole = getUserRole();
   const [isRateLimited, setIsRateLimited] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const attendanceListRender = async () => {
+    setLoading(true);
+    try {
+      const response = await api();
+    } catch (error) {}
+  };
+
+  const attendanceLogRender = async () => {};
+
+  useEffect(() => {
+    attendanceListRender();
+  }, []);
 
   return (
     <PrivateRoute allowedRoles={["user", "admin", "superadmin"]}>

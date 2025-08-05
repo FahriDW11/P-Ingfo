@@ -4,8 +4,9 @@ import cors from "cors";
 import path from "path";
 
 import authRoute from "./routes/authRoute.js";
-import tasksRoute from "./routes/tasksRoute.js";
 import usersRoute from "./routes/usersRoute.js";
+import attendanceRoute from "./routes/attendanceRoute.js";
+import tasksRoute from "./routes/tasksRoute.js";
 import { connectDB } from "./config/db.js";
 import rateLimiter from "./middleware/rateLimiter.js";
 
@@ -27,9 +28,10 @@ if (process.env.NODE_ENV !== "production") {
 app.use(express.json());
 app.use(rateLimiter);
 
-app.use("/api/tasks", tasksRoute);
-app.use("/api/users", usersRoute);
 app.use("/api/auth", authRoute);
+app.use("/api/users", usersRoute);
+app.use("/api/attendance", attendanceRoute);
+app.use("/api/tasks", tasksRoute);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../client/dist")));
