@@ -8,6 +8,7 @@ router.post("/", createNewAttendance);
 router.put("/:id", updateAttendance);
 router.delete("/:id", deleteAttendance);
 
+router.post("/presence", present);
 router.get("/log", getAllAttendanceLogs);
 
 export default router;
